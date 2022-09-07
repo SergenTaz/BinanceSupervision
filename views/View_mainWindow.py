@@ -1,9 +1,7 @@
-from BinanceSupervision.models.untitled import Ui_MainWindow
+from BinanceSupervision.models.BinanceSupervision_main import Ui_MainWindow
 
 from PyQt6.QtWidgets import (
-
     QMainWindow
-
 )
 
 class Window(QMainWindow, Ui_MainWindow):
