@@ -1,12 +1,4 @@
-import sys
-
-from PyQt6.QtWidgets import (
-
-    QApplication
-
-)
-
-from views.mainWindow import Window
+from controlers.mainLauncher import mainLaucnher
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
@@ -14,9 +6,6 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print('Starting')
-    app=QApplication(sys.argv)
-    win = Window()
-    win.show()
-    sys.exit(app.exec())
+    launcher=mainLaucnher()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
