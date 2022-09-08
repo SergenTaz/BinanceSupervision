@@ -7,9 +7,7 @@ from BinanceSupervision.views.View_mainWindow import Window
 from BinanceSupervision.models.Model_app import Model_app
 from BinanceSupervision.controlers.Ctrl_mainWindow import Ctrl_mainWindow
 
-FORMAT = '%(asctime)s %(username)s:     %(message)s'
-logging.basicConfig(format=FORMAT, datefmt='%m/%d/%Y %I:%M:%S %p',filename='system.log', encoding='utf-8', level=logging.DEBUG)
-d = {'username': os.getlogin()}
+
 
 class App(QApplication):
     def __init__(self, sys_argv):
@@ -21,7 +19,6 @@ class App(QApplication):
 
 if __name__ == '__main__':
     app = App(sys.argv)
-    logging.info("Starting",extra=d)
     sys.exit(app.exec())
 
 

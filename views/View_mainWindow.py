@@ -1,4 +1,4 @@
-import sys
+import os,sys,logging
 
 from BinanceSupervision.resources.Resource_main import Ui_MainWindow
 from BinanceSupervision.controlers.Ctrl_BinanceConfiguration import Ctrl_BinanceConfiguration
@@ -8,6 +8,10 @@ from BinanceSupervision.views.View_BinanceConfiguration import Dialog
 from PyQt6.QtWidgets import (
     QMainWindow
 )
+
+FORMAT = '%(asctime)s %(username)s:     %(message)s'
+logging.basicConfig(format=FORMAT, datefmt='%m/%d/%Y %I:%M:%S %p',filename='system.log', encoding='utf-8', level=logging.DEBUG)
+d = {'username': os.getlogin()}
 
 class Window(QMainWindow, Ui_MainWindow):
     Model_BinanceConfig=None
@@ -24,6 +28,8 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.connectSignalSlots()
 
+        logging.info("Starting", extra=d)
+
     def connectSignalSlots(self):
         self.ui.action_Connect.triggered.connect(self.OpenBinanceConfiguration)
         self.ui.action_Exit.triggered.connect(self.Exit)
@@ -38,5 +44,6 @@ class Window(QMainWindow, Ui_MainWindow):
         self.View_BinanceConfiguration.exec()
 
     def Exit(self):
+        logging.info("Bye-bye", extra=d)
         sys.exit(0)
 
