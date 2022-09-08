@@ -1,11 +1,27 @@
-from controlers.Ctrl_mainLauncher import mainLauncher
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import os,sys,logging
 
-# Press the green button in the gutter to run the script.
+from PyQt6.QtWidgets import (
+    QApplication
+)
+from BinanceSupervision.views.View_mainWindow import Window
+from BinanceSupervision.models.Model_app import Model_app
+from BinanceSupervision.controlers.Ctrl_mainWindow import Ctrl_mainWindow
+
+FORMAT = '%(asctime)s %(username)s:     %(message)s'
+logging.basicConfig(format=FORMAT, datefmt='%m/%d/%Y %I:%M:%S %p',filename='system.log', encoding='utf-8', level=logging.DEBUG)
+d = {'username': os.getlogin()}
+
+class App(QApplication):
+    def __init__(self, sys_argv):
+        super(App, self).__init__(sys_argv)
+        self.model = Model_app()
+        self.main_controller = Ctrl_mainWindow(self.model)
+        self.main_view = Window(self.model, self.main_controller)
+        self.main_view.show()
+
 if __name__ == '__main__':
-    print('Starting')
-    launcher=mainLauncher()
+    app = App(sys.argv)
+    logging.info("Starting",extra=d)
+    sys.exit(app.exec())
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
