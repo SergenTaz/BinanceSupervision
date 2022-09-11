@@ -8,3 +8,6 @@ class Model_BinanceConfiguration():
 
     def setApiSecret(self,secret):
         self.apiSecret=secret
+
+    def getConfig(self):
+        return self.apiKey,self.apiSecret

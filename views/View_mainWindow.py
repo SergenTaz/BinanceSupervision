@@ -4,6 +4,7 @@ from BinanceSupervision.resources.Resource_main import Ui_MainWindow
 from BinanceSupervision.controlers.Ctrl_BinanceConfiguration import Ctrl_BinanceConfiguration
 from BinanceSupervision.models.Model_BinanceConfiguration import Model_BinanceConfiguration
 from BinanceSupervision.views.View_BinanceConfiguration import Dialog
+from PyQt6 import QtCore
 
 from PyQt6.QtWidgets import (
     QMainWindow
@@ -14,7 +15,8 @@ logging.basicConfig(format=FORMAT, datefmt='%m/%d/%Y %I:%M:%S %p',filename='syst
 d = {'username': os.getlogin()}
 
 class Window(QMainWindow, Ui_MainWindow):
-    Model_BinanceConfig=None
+    SignalConfigSet=QtCore.pyqtSignal(str)
+    Model_BinanceConfiguration=None
     Ctrl_BinanceConfiguration=None
     View_BinanceConfiguration=None
     def __init__(self, model_app,ctrl_app):
@@ -35,12 +37,12 @@ class Window(QMainWindow, Ui_MainWindow):
         self.ui.action_Exit.triggered.connect(self.Exit)
 
     def OpenBinanceConfiguration(self):
-        if(self.Model_BinanceConfig==None):
-            self.Model_BinanceConfig = Model_BinanceConfiguration()
+        if(self.Model_BinanceConfiguration==None):
+            self.Model_BinanceConfiguration = Model_BinanceConfiguration()
         if(self.Ctrl_BinanceConfiguration==None):
-            self.Ctrl_BinanceConfiguration = Ctrl_BinanceConfiguration(self.Model_BinanceConfig)
+            self.Ctrl_BinanceConfiguration = Ctrl_BinanceConfiguration(self.Model_BinanceConfiguration)
         if (self.View_BinanceConfiguration==None):
-            self.View_BinanceConfiguration = Dialog(self.Model_BinanceConfig,self.Ctrl_BinanceConfiguration)
+            self.View_BinanceConfiguration = Dialog(self.Model_BinanceConfiguration,self.Ctrl_BinanceConfiguration,self.SignalConfigSet)
         self.View_BinanceConfiguration.exec()
 
     def Exit(self):

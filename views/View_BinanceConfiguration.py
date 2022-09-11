@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import (
 )
 
 class Dialog(QDialog):
-    def __init__(self,model,ctrl):
+    def __init__(self,model,ctrl,signal):
         super().__init__()
 
         self.model = model
