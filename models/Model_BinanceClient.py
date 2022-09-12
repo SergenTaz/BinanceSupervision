@@ -5,3 +5,6 @@ class Model_BinanceClient():
 
     def getConfig(self):
         return self.config.getConfig()
+
+    def setConfig(self, config):
+        self.config=config

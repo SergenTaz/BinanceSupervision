@@ -18,6 +18,7 @@ class Dialog(QDialog):
         self.ui.setupUi(self)
 
         self.connectSignalSlots()
+        self.signal=signal
 
     def connectSignalSlots(self):
         self.ui.buttonBox.accepted.connect(self.OK)
@@ -25,6 +26,7 @@ class Dialog(QDialog):
 
     def OK(self):
         self.ctrl.OkClicked(self.getLineEditApiKey(),self.getLineEditApiSecret())
+        self.signal.emit()
 
     def CANCEL(self):
         pass
