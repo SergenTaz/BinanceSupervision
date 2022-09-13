@@ -3,7 +3,7 @@ import sys
 from BinanceSupervision.resources.Resource_BinanceConnection import Ui_Dialog
 
 
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QDialog
 )
 
