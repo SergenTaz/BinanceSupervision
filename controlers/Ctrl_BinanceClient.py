@@ -29,7 +29,7 @@ class Ctrl_BinanceClient():
         try:
 
             #self.client = Client(key, secret)
-            #self.client = Client("zbCOHvPXUp6s3ZyRjg5q25WmiLybOXevSCfgOyAIYRBH5kmWlrneCvB80Cf1UR7x", "9g5eE8BC9uewvgIJ0gRfGLvzr3iGBhsMQXNraYptB7iIbkg7Svu0oGh97Af32nYN",testnet=True)
+            #self.client = Client("zbCOHvPXUp6s3ZyRjg5q25WmiLybOXevSCfgOyAIYRBH5kmWlrneCvB80Cf1UR7x", "9g5eE8BC9uewvgIJ0gRfGLvzr3iGBhsMQXNraYptB7iIbkg7Svu0oGh97Af32nYN")
             self.client = Client("CvAXhDl3RTADDSpNk58c7wCurEsnWUioIRn8wzkcd5sJQ6XJyqODGmx7Ashry3bg",
                                  "uP60zKQj71nvBaibCzlfAWv2aIjTK0oBeNiYU2xZQmgkamubJUqvfEVKLKtZ4rqv")
 
