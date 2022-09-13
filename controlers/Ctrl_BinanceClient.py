@@ -1,4 +1,8 @@
+import hashlib
+import hmac
 import logging
+import os
+from urllib.parse import urlencode
 
 from binance.client import Client
 from binance.exceptions import BinanceAPIException
@@ -23,19 +27,24 @@ class Ctrl_BinanceClient():
 
     def connect(self):
         try:
+
             #self.client = Client(key, secret)
-            self.client = Client("zbCOHvPXUp6s3ZyRjg5q25WmiLybOXevSCfgOyAIYRBH5kmWlrneCvB80Cf1UR7x", "9g5eE8BC9uewvgIJ0gRfGLvzr3iGBhsMQXNraYptB7iIbkg7Svu0oGh97Af32nYN",testnet=True)
+            #self.client = Client("zbCOHvPXUp6s3ZyRjg5q25WmiLybOXevSCfgOyAIYRBH5kmWlrneCvB80Cf1UR7x", "9g5eE8BC9uewvgIJ0gRfGLvzr3iGBhsMQXNraYptB7iIbkg7Svu0oGh97Af32nYN",testnet=True)
+            self.client = Client("CvAXhDl3RTADDSpNk58c7wCurEsnWUioIRn8wzkcd5sJQ6XJyqODGmx7Ashry3bg",
+                                 "uP60zKQj71nvBaibCzlfAWv2aIjTK0oBeNiYU2xZQmgkamubJUqvfEVKLKtZ4rqv")
 
             self.checkBinanceConnection()
             
             info = self.client.get_account()
-            print("account:",info["balances"])
+            deposit_history=self.client.get_deposit_history()
+            print("account:",info["balances"][0])
             #print(self.getMarketPriceInEUR("DOT"))
-            #print("history:", type(self.client.get_deposit_history()))
-            #print("ping:",self.client.get_products())
+            print("history:", type(self.client.get_deposit_history()))
+            print("ping:",self.client.get_products())
         except BinanceAPIException as e:
             error=(str(e.status_code)+" : "+str(e.message))
             print ("Error "+error)
+            print("request : "+str(e.request.url))
             logging.error(error)
             self.disconnect()
 
