@@ -17,21 +17,18 @@ rounded_amount = round_step_size(amount, tick_size)
 class Ctrl_BinanceClient():
     def __init__(self,model):
         self.model=model
-        key,secret=model.getConfig()
-        self.connect()
+        self.connect(self.model.getConfig()[0],self.model.getConfig()[1])
 
     def updateConfig(self,config):
         self.disconnect()
         self.model.setConfig(config)
-        self.connect()
+        self.connect(self.model.getConfig()[0],self.model.getConfig()[1])
 
-    def connect(self):
+    def connect(self,key,secret):
         try:
-
-            #self.client = Client(key, secret)
-            #self.client = Client("zbCOHvPXUp6s3ZyRjg5q25WmiLybOXevSCfgOyAIYRBH5kmWlrneCvB80Cf1UR7x", "9g5eE8BC9uewvgIJ0gRfGLvzr3iGBhsMQXNraYptB7iIbkg7Svu0oGh97Af32nYN")
-            self.client = Client("CvAXhDl3RTADDSpNk58c7wCurEsnWUioIRn8wzkcd5sJQ6XJyqODGmx7Ashry3bg",
-                                 "uP60zKQj71nvBaibCzlfAWv2aIjTK0oBeNiYU2xZQmgkamubJUqvfEVKLKtZ4rqv")
+            self.client = Client(key, secret)
+            #self.client = Client("CvAXhDl3RTADDSpNk58c7wCurEsnWUioIRn8wzkcd5sJQ6XJyqODGmx7Ashry3bg",
+            #                     "uP60zKQj71nvBaibCzlfAWv2aIjTK0oBeNiYU2xZQmgkamubJUqvfEVKLKtZ4rqv")
 
             self.checkBinanceConnection()
             

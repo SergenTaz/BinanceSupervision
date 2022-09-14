@@ -17,6 +17,10 @@ class Dialog(QDialog):
         self.ui=Ui_Dialog()
         self.ui.setupUi(self)
 
+        key,secret=self.model.getConfig()
+        self.setLineEditApiKey(key)
+        self.setLineEditApiSecret(secret)
+
         self.connectSignalSlots()
         self.signal=signal
 
@@ -36,3 +40,9 @@ class Dialog(QDialog):
 
     def getLineEditApiSecret(self):
         return self.ui.lineEdit_apiSecret.text()
+
+    def setLineEditApiKey(self,key):
+        self.ui.lineEdit_apiKey.setText(key)
+
+    def setLineEditApiSecret(self,secret):
+        self.ui.lineEdit_apiSecret.setText(secret)
