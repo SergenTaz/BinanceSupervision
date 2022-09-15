@@ -19,7 +19,14 @@ class Ctrl_ConfigFile():
             return 0
 
     def readBinanceConfiguration(self):
-        config=configparser.ConfigParser()
-        config.read('conf.ini')
-        return config['Binance Configuration']['API key'],config['Binance Configuration']['API secret']
+        key=""
+        secret=""
+        try:
+            config=configparser.ConfigParser()
+            config.read('conf.ini')
+            key=config['Binance Configuration']['API key']
+            secret=config['Binance Configuration']['API secret']
+        except:
+            pass
+        return key,secret
 
