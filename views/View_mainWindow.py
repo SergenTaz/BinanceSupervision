@@ -1,5 +1,8 @@
 import os,sys,logging
 
+from PyQt5.QtCore import QFile
+from PyQt5.QtGui import QPixmap
+
 from BinanceSupervision.controlers.Ctrl_BinanceClient import Ctrl_BinanceClient
 from BinanceSupervision.models.Model_BinanceClient import Model_BinanceClient
 from BinanceSupervision.resources.Resource_main import Ui_MainWindow
@@ -9,7 +12,7 @@ from BinanceSupervision.views.View_BinanceConfiguration import Dialog
 from PyQt5 import QtCore
 
 from PyQt5.QtWidgets import (
-    QMainWindow
+    QMainWindow, QFileDialog
 )
 
 FORMAT = '%(asctime)s %(username)s:     %(message)s'
@@ -40,31 +43,50 @@ class Window(QMainWindow, Ui_MainWindow):
         logging.info("Starting")
 
     def connectSignalSlots(self):
-        self.ui.action_Connect.triggered.connect(self.OpenBinanceConfiguration)
-        self.ui.action_Exit.triggered.connect(self.Exit)
-        self.SignalConfigSet.connect(self.BinanceConfigured)
+        self.ui.action_Connect.triggered.connect(self.openBinanceConfiguration)
+        self.ui.action_Disconnect.triggered.connect(self.disconnectBinance)
+        self.ui.action_Exit.triggered.connect(self.exit)
+        self.SignalConfigSet.connect(self.binanceConfigured)
+        self.ui.btn_LoadFile.clicked.connect(self.loadFile)
+        self.ui.btn_AnalyzeFile.clicked.connect(self.analyzeFile)
 
-    def OpenBinanceConfiguration(self):
-        if(self.Model_BinanceConfiguration==None):
+    def openBinanceConfiguration(self):
+        if self.Model_BinanceConfiguration is None:
             self.Model_BinanceConfiguration = Model_BinanceConfiguration()
-        if(self.Ctrl_BinanceConfiguration==None):
+        if self.Ctrl_BinanceConfiguration is None:
             self.Ctrl_BinanceConfiguration = Ctrl_BinanceConfiguration(self.Model_BinanceConfiguration)
-        if (self.View_BinanceConfiguration==None):
+        if self.View_BinanceConfiguration is None:
             self.View_BinanceConfiguration = Dialog(self.Model_BinanceConfiguration,self.Ctrl_BinanceConfiguration,self.SignalConfigSet)
 
         self.View_BinanceConfiguration.exec()
 
-    def Exit(self):
-        if (self.Ctrl_BinanceClient != None):
+    def exit(self):
+        if self.Ctrl_BinanceClient is not None:
             self.Ctrl_BinanceClient.disconnect()
-        logging.info("Bye-bye")
         sys.exit(0)
 
-    def BinanceConfigured(self):
-        if (self.Ctrl_BinanceClient == None):
+    def binanceConfigured(self):
+        if self.Ctrl_BinanceClient is None:
             self.Ctrl_BinanceClient=Ctrl_BinanceClient(Model_BinanceClient(self.Model_BinanceConfiguration))
         else:
             self.Ctrl_BinanceClient.updateConfig(self.Model_BinanceConfiguration)
 
+        self.ui.label_BinanceState.setText("Binance connected")
+
+    def loadFile(self):
+        file=QFileDialog.getOpenFileName(self, "Open File", "","CSV File (*.csv);;All Files (*)")
+        if file:
+            self.ui.le_PathFile.setText(str(file[0]))
+
+
+    def analyzeFile(self):
+        file=self.ui.le_PathFile.text()
+        print(file)
+
+    def disconnectBinance(self):
+        if self.Ctrl_BinanceClient is not None:
+            self.Ctrl_BinanceClient.disconnect()
+
+        self.ui.label_BinanceState.setText("Binance disconnected")
 
 

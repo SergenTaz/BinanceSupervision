@@ -27,17 +27,17 @@ class Ctrl_BinanceClient():
     def connect(self,key,secret):
         try:
             self.client = Client(key, secret)
-            #self.client = Client("CvAXhDl3RTADDSpNk58c7wCurEsnWUioIRn8wzkcd5sJQ6XJyqODGmx7Ashry3bg",
-            #                     "uP60zKQj71nvBaibCzlfAWv2aIjTK0oBeNiYU2xZQmgkamubJUqvfEVKLKtZ4rqv")
 
             self.checkBinanceConnection()
             
             info = self.client.get_account()
-            deposit_history=self.client.get_deposit_history()
-            print("account:",info["balances"][0])
+            for asset in self.getAccountBalance():
+                print(asset['asset']+" : "+asset['free']+" - "+asset['locked'])
+
+            #print("asset DOT: ",self.client.get_asset_balance(asset='DOT'))
             #print(self.getMarketPriceInEUR("DOT"))
-            print("history:", type(self.client.get_deposit_history()))
-            print("ping:",self.client.get_products())
+            #print("history:", self.client.get_deposit_history())
+            #print("ping:",self.client.get_products())
         except BinanceAPIException as e:
             error=(str(e.status_code)+" : "+str(e.message))
             print ("Error "+error)
@@ -55,7 +55,7 @@ class Ctrl_BinanceClient():
 
     def disconnect(self):
         self.client.close_connection()
-        logging.info("Disconnected from Binance")
+        logging.info("Disconnected from Binance by user")
 
     def getServerTime(self):
         return datetime.fromtimestamp(self.client.get_server_time()["serverTime"]/1000)
@@ -63,3 +63,11 @@ class Ctrl_BinanceClient():
     def getMarketPriceInEUR(self,Asset):
         a=Asset.upper()+"EUR"
         return self.client.get_symbol_ticker(symbol=a)
+
+    def getAccountBalance(self):
+        balance = self.client.get_account()['balances']
+        filtered=[]
+        for asset in balance:
+            if(float(asset['free'])!=0 or float(asset['locked'])!=0):
+                filtered.append(asset)
+        return filtered
