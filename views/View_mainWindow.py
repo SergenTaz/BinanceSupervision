@@ -2,18 +2,23 @@ import os,sys,logging
 
 from PyQt5.QtCore import QFile
 from PyQt5.QtGui import QPixmap
-
-from BinanceSupervision.controlers.Ctrl_BinanceClient import Ctrl_BinanceClient
-from BinanceSupervision.models.Model_BinanceClient import Model_BinanceClient
-from BinanceSupervision.resources.Resource_main import Ui_MainWindow
-from BinanceSupervision.controlers.Ctrl_BinanceConfiguration import Ctrl_BinanceConfiguration
-from BinanceSupervision.models.Model_BinanceConfiguration import Model_BinanceConfiguration
-from BinanceSupervision.views.View_BinanceConfiguration import Dialog
 from PyQt5 import QtCore
 
 from PyQt5.QtWidgets import (
     QMainWindow, QFileDialog
 )
+
+from BinanceSupervision.controlers.Ctrl_BinanceClient import Ctrl_BinanceClient
+from BinanceSupervision.controlers.Ctrl_BinanceReportAnalyzer import Ctrl_BinanceReportAnalyzer
+from BinanceSupervision.controlers.Ctrl_BinanceConfiguration import Ctrl_BinanceConfiguration
+from BinanceSupervision.controlers.Ctrl_historyParser import Ctrl_historyParser
+
+from BinanceSupervision.models.Model_BinanceClient import Model_BinanceClient
+from BinanceSupervision.models.Model_BinanceReportAnalyze import Model_BinanceReportAnalyze
+from BinanceSupervision.models.Model_BinanceConfiguration import Model_BinanceConfiguration
+
+from BinanceSupervision.resources.Resource_main import Ui_MainWindow
+from BinanceSupervision.views.View_BinanceConfiguration import Dialog
 
 FORMAT = '%(asctime)s %(username)s:     %(message)s'
 logging.basicConfig(handlers=[logging.FileHandler(filename="system.log",
@@ -48,6 +53,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.ui.action_Exit.triggered.connect(self.exit)
         self.SignalConfigSet.connect(self.binanceConfigured)
         self.ui.btn_LoadFile.clicked.connect(self.loadFile)
+        self.ui.btn_parseFile.clicked.connect(self.parseFile)
         self.ui.btn_AnalyzeFile.clicked.connect(self.analyzeFile)
 
     def openBinanceConfiguration(self):
@@ -74,14 +80,22 @@ class Window(QMainWindow, Ui_MainWindow):
         self.ui.label_BinanceState.setText("Binance connected")
 
     def loadFile(self):
-        file=QFileDialog.getOpenFileName(self, "Open File", "","CSV File (*.csv);;All Files (*)")
+        file=QFileDialog.getOpenFileName(self, "Open File", "","Excel File (*.xlsx);;CSV File (*.csv);;All Files (*)")
         if file:
             self.ui.le_PathFile.setText(str(file[0]))
 
+    def parseFile(self):
+        filePath = self.ui.le_PathFile.text()
+        parser=Ctrl_historyParser()
+        history=parser.parseFile(filePath)
 
-    def analyzeFile(self):
+    def analyzeFile(self):  #TODO
         file=self.ui.le_PathFile.text()
-        print(file)
+        mdl_analyze=Model_BinanceReportAnalyze(file)
+        analyzer=Ctrl_BinanceReportAnalyzer(mdl_analyze)
+
+        var = analyzer.launchAnalyze()
+        #print(file)
 
     def disconnectBinance(self):
         if self.Ctrl_BinanceClient is not None:
