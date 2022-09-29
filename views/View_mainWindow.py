@@ -80,7 +80,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.ui.label_BinanceState.setText("Binance connected")
 
     def loadFile(self):
-        file=QFileDialog.getOpenFileName(self, "Open File", "","Excel File (*.xlsx);;CSV File (*.csv);;All Files (*)")
+        file=QFileDialog.getOpenFileName(self, "Open File", "","CSV File (*.csv);;Excel File (*.xlsx);;All Files (*)")
         if file:
             self.ui.le_PathFile.setText(str(file[0]))
 
@@ -88,6 +88,7 @@ class Window(QMainWindow, Ui_MainWindow):
         filePath = self.ui.le_PathFile.text()
         parser=Ctrl_historyParser()
         history=parser.parseFile(filePath)
+        history.__str__()
 
     def analyzeFile(self):  #TODO
         file=self.ui.le_PathFile.text()
