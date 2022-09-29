@@ -34,6 +34,7 @@ class Window(QMainWindow, Ui_MainWindow):
     Ctrl_BinanceClient=None
     Ctrl_BinanceConfiguration=None
     View_BinanceConfiguration=None
+    history=None
     def __init__(self, model_app,ctrl_app):
         super().__init__()
 
@@ -86,9 +87,10 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def parseFile(self):
         filePath = self.ui.le_PathFile.text()
-        parser=Ctrl_historyParser()
-        history=parser.parseFile(filePath)
-        history.__str__()
+        parser=Ctrl_historyParser(self.history)
+        self.history=parser.parseFile(filePath)
+        print("----------Your history----------")
+        self.history.__str__()
 
     def analyzeFile(self):  #TODO
         file=self.ui.le_PathFile.text()

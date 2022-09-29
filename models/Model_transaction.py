@@ -21,8 +21,14 @@ class Model_transaction():
     def getAmountUsed(self):
         return self.amount_used
 
-    def getAmountReceived(self):
+    def getTokenUsed(self):
+        return self.token_used
+
+    def getAmountEarned(self):
         return self.amount_earned
+
+    def getTokenEarned(self):
+        return self.token_earned
 
     def __str__(self):
         return (self.date.strftime("%d/%m/%Y %H:%M:%S")+" | "+self.transaction_type+ " : "+str(self.amount_earned) +" "+ self.token_earned+ " for "+ str(self.amount_used)+ " "+ self.token_used)
