@@ -1,4 +1,5 @@
 from datetime import datetime
+transactionTypes=["BUY", "SELL"]
 
 class Model_transaction():
     def __init__(self, date,transaction_type: str, token_used, amount_used: float, token_earned, amount_earned: float):
@@ -6,6 +7,8 @@ class Model_transaction():
             self.date=datetime.strptime(date,'%Y-%m-%d %H:%M:%S')
         else:
             self.date=date
+        if transaction_type not in transactionTypes:
+            raise ValueError("Transaction type : "+transaction_type+" not recognized")
         self.transaction_type=transaction_type
         self.token_used=token_used
         self.amount_used=amount_used
@@ -31,4 +34,8 @@ class Model_transaction():
         return self.token_earned
 
     def __str__(self):
-        return (self.date.strftime("%d/%m/%Y %H:%M:%S")+" | "+self.transaction_type+ " : "+str(self.amount_earned) +" "+ self.token_earned+ " for "+ str(self.amount_used)+ " "+ self.token_used)
+        if self.getType()=="BUY":
+            return (self.date.strftime("%d/%m/%Y %H:%M:%S")+" | "+self.transaction_type+ " : "+str(self.amount_earned) +" "+ self.token_earned+ " for "+ str(self.amount_used)+ " "+ self.token_used)
+        elif self.getType()=="SELL":
+            return (self.date.strftime("%d/%m/%Y %H:%M:%S") + " | " + self.transaction_type + " : " + str(
+                self.amount_used) + " " + self.token_used + " for " + str(self.amount_earned) + " " + self.token_earned)

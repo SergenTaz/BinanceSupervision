@@ -7,8 +7,10 @@ class Model_History():
 
     def addTransaction(self, transaction: Model_transaction):
         if not(self.alreadyExist(transaction)):
-            if(transaction.getType()=="Buy" and transaction.getTokenUsed()=="EUR"):
+            if (transaction.getType()=="BUY" and transaction.getTokenUsed()=="EUR"):
                 self.totalInvested=self.totalInvested+transaction.getAmountUsed()
+            if (transaction.getType() == "SELL" and transaction.getTokenEarned() == "EUR"):
+                self.totalInvested = self.totalInvested - transaction.getAmountEarned()
             self.transactionHistory.append(transaction)
 
     def gettransactionHistorySortedByDate(self):

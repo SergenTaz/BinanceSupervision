@@ -88,9 +88,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def parseFile(self):
         filePath = self.ui.le_PathFile.text()
         parser=Ctrl_historyParser(self.history)
-        self.history=parser.parseFile(filePath)
-        print("----------Your history----------")
-        self.history.__str__()
+        self.history = parser.parseOrderHistory(filePath)
 
     def analyzeFile(self):  #TODO
         file=self.ui.le_PathFile.text()
