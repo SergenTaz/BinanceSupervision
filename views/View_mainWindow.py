@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (
 )
 
 from BinanceSupervision.controlers.Ctrl_BinanceClient import Ctrl_BinanceClient
-from BinanceSupervision.controlers.Ctrl_BinanceReportAnalyzer import Ctrl_BinanceReportAnalyzer
+from BinanceSupervision.controlers.Ctrl_historyAnalyzer import Ctrl_historyAnalyzer
 from BinanceSupervision.controlers.Ctrl_BinanceConfiguration import Ctrl_BinanceConfiguration
 from BinanceSupervision.controlers.Ctrl_historyParser import Ctrl_historyParser
 
@@ -90,10 +90,13 @@ class Window(QMainWindow, Ui_MainWindow):
         parser=Ctrl_historyParser(self.history)
         self.history = parser.parseOrderHistory(filePath)
 
+        # analyzer = Ctrl_historyAnalyzer(self.history,self.Ctrl_BinanceClient)
+        # self.analyzedHistory=analyzer.getAnalyzeResults()
+
     def analyzeFile(self):  #TODO
         file=self.ui.le_PathFile.text()
         mdl_analyze=Model_BinanceReportAnalyze(file)
-        analyzer=Ctrl_BinanceReportAnalyzer(mdl_analyze)
+        analyzer=Ctrl_historyAnalyzer(mdl_analyze)
 
         var = analyzer.launchAnalyze()
         #print(file)
