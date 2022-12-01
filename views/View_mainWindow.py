@@ -9,9 +9,9 @@ from PyQt5.QtWidgets import (
 )
 
 from BinanceSupervision.controlers.Ctrl_BinanceClient import Ctrl_BinanceClient
-from BinanceSupervision.controlers.Ctrl_historyAnalyzer import Ctrl_historyAnalyzer
+from BinanceSupervision.controlers.Ctrl_History import Ctrl_History
 from BinanceSupervision.controlers.Ctrl_BinanceConfiguration import Ctrl_BinanceConfiguration
-from BinanceSupervision.controlers.Ctrl_historyParser import Ctrl_historyParser
+from BinanceSupervision.controlers.Ctrl_FileParser import Ctrl_FileParser
 
 from BinanceSupervision.models.Model_BinanceClient import Model_BinanceClient
 from BinanceSupervision.models.Model_BinanceReportAnalyze import Model_BinanceReportAnalyze
@@ -77,7 +77,6 @@ class Window(QMainWindow, Ui_MainWindow):
             self.Ctrl_BinanceClient=Ctrl_BinanceClient(Model_BinanceClient(self.Model_BinanceConfiguration))
         else:
             self.Ctrl_BinanceClient.updateConfig(self.Model_BinanceConfiguration)
-
         self.ui.label_BinanceState.setText("Binance connected")
 
     def loadFile(self):
@@ -86,20 +85,36 @@ class Window(QMainWindow, Ui_MainWindow):
             self.ui.le_PathFile.setText(str(file[0]))
 
     def parseFile(self):
-        filePath = self.ui.le_PathFile.text()
-        parser=Ctrl_historyParser(self.history)
-        self.history = parser.parseOrderHistory(filePath)
+        pass
+        # filePath = self.ui.le_PathFile.text()
+        # parser=Ctrl_FileParser()
+        # self.history= parser.parseTransactionHistoryFile(filePath)
+        # t=parser.history.getTransactionsByOperation("Buy")
+        # print("ok")
+        # self.history = parser.parseOrderHistory(filePath)
 
         # analyzer = Ctrl_historyAnalyzer(self.history,self.Ctrl_BinanceClient)
         # self.analyzedHistory=analyzer.getAnalyzeResults()
 
     def analyzeFile(self):  #TODO
-        file=self.ui.le_PathFile.text()
-        mdl_analyze=Model_BinanceReportAnalyze(file)
-        analyzer=Ctrl_historyAnalyzer(mdl_analyze)
+        filePath = self.ui.le_PathFile.text()
+        parser = Ctrl_FileParser()
+        PureHistory = parser.parseTransactionHistoryFile(filePath)
 
-        var = analyzer.launchAnalyze()
-        #print(file)
+        TransformedHistory=Ctrl_History().buildHistoryWithTab(PureHistory)
+
+        if self.history==None:
+            self.history=TransformedHistory
+        else:
+            self.history=Ctrl_History().mergeTwoHistories(self.history,TransformedHistory)
+        print("ok")
+
+        # file=self.ui.le_PathFile.text()
+        # mdl_analyze=Model_BinanceReportAnalyze(file)
+        # analyzer=Ctrl_historyAnalyzer(mdl_analyze)
+        #
+        # var = analyzer.launchAnalyze()
+        # #print(file)
 
     def disconnectBinance(self):
         if self.Ctrl_BinanceClient is not None:
