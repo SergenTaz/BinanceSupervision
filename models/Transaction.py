@@ -2,7 +2,7 @@ from datetime import datetime
 
 #This class modelize a transaction
 class Transaction():
-    def __init__(self, userID, date, account, operation: str, token, amount: float):
+    def __init__(self, userID, date: str, account: str, operation: str, token: str, amount: float):
         self.userID=userID
 
         if (type(date) == str):
@@ -19,7 +19,7 @@ class Transaction():
         return self.userID
 
     def getDate(self):
-        return self.date.strftime("%d/%m/%Y %H:%M:%S")
+        return self.date
 
     def getAccount(self):
         return self.account

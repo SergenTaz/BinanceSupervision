@@ -18,3 +18,12 @@ class Model_PureTransaction:
 
     def getOperation(self):
         return self.operation
+
+    def getCoin(self):
+        return self.coin
+
+    def getChange(self):
+        return self.change
+
+    def getAccount(self):
+        return self.account

@@ -1,4 +1,4 @@
-from BinanceSupervision.HistoryManager.models.Transaction import Transaction
+from BinanceSupervision.models.Transaction import Transaction
 
 class HistoryAnalyzer():
     def __init__(self):

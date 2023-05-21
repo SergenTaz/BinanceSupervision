@@ -1,4 +1,4 @@
-from Model_PureTransaction import Model_PureTransaction
+from BinanceSupervision.models.Model_PureTransaction import Model_PureTransaction
 
 class Model_PureTransactionHistory:
     def __init__(self):

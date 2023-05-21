@@ -1,4 +1,7 @@
 import csv, re
+import sys
+import time
+
 import pandas as pd
 
 from BinanceSupervision.models.Model_PureTransactionHistory import Model_PureTransactionHistory
@@ -62,6 +65,8 @@ class Ctrl_FileParser():
                 file.seek(0)
                 spamreader = csv.reader(file, dialect)
 
+                row_count = sum(1 for row in spamreader)
+                file.seek(0)
                 header = spamreader.__next__()
                 dateIndex = header.index("UTC_Time")
                 operationIndex = header.index("Operation")
@@ -71,7 +76,12 @@ class Ctrl_FileParser():
 
                 self.history = Model_PureTransactionHistory()
 
+
+                i=0
+                sys.stdout.write(
+                    "\r" + "Analyzing " + str(0) + "% (" + str(i) + "/" + str(row_count) + ")")
                 for row in spamreader:
+                    pourcentage=(i/row_count)*100
                     date = row[dateIndex]
                     account = row[accountIndex]
                     operation = row[operationIndex]
@@ -79,6 +89,8 @@ class Ctrl_FileParser():
                     change = row[changeIndex]
 
                     self.history.addTransaction(Model_PureTransaction(date,account,operation,coin,change))
+                    i+=1
+                    sys.stdout.write("\r"+"Analyzing " + str(round(pourcentage, 0)) + "% (" + str(i) + "/" + str(row_count) + ")")
 
         elif path.endswith(".xlsx"): #TODO
             print("xlsx")

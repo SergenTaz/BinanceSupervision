@@ -4,6 +4,7 @@ import pandas as pd
 from BinanceSupervision.models import Model_history
 from BinanceSupervision.models.Model_AssetBalance import Model_AssetBalance
 from BinanceSupervision.models.Model_BinanceReportAnalyze import Model_BinanceReportAnalyze
+from BinanceSupervision.models.Model_PureTransactionHistory import Model_PureTransactionHistory
 
 class Ctrl_History():
     results= {}
@@ -12,7 +13,14 @@ class Ctrl_History():
         # self.history=history
         # self.launchAnalyze(self.history,Ctrl_BinanceClient)
 
-    def buildHistoryWithTab(self,PureHistory):
+    def buildHistoryWithTab(self,PureHistory: Model_PureTransactionHistory):
+        sell = PureHistory.getTransactionsByOperation("Sell")
+        buy = PureHistory.getTransactionsByOperation("Buy")
+        deposit=PureHistory.getTransactionsByOperation("Deposit")
+
+        # for depo in deposit:
+
+
         pass
 
     def mergeTwoHistories(self,historyA,historyB):
