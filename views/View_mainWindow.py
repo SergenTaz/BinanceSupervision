@@ -8,17 +8,17 @@ from PyQt5.QtWidgets import (
     QMainWindow, QFileDialog
 )
 
-from BinanceSupervision.controlers.Ctrl_BinanceClient import Ctrl_BinanceClient
-from BinanceSupervision.controlers.Ctrl_History import Ctrl_History
-from BinanceSupervision.controlers.Ctrl_BinanceConfiguration import Ctrl_BinanceConfiguration
-from BinanceSupervision.controlers.Ctrl_FileParser import Ctrl_FileParser
+from controlers.Ctrl_BinanceClient import Ctrl_BinanceClient
+from controlers.Ctrl_History import Ctrl_History
+from controlers.Ctrl_BinanceConfiguration import Ctrl_BinanceConfiguration
+from controlers.Ctrl_FileParser import Ctrl_FileParser
 
-from BinanceSupervision.models.Model_BinanceClient import Model_BinanceClient
-from BinanceSupervision.models.Model_BinanceReportAnalyze import Model_BinanceReportAnalyze
-from BinanceSupervision.models.Model_BinanceConfiguration import Model_BinanceConfiguration
+from models.Model_BinanceClient import Model_BinanceClient
+from models.Model_BinanceReportAnalyze import Model_BinanceReportAnalyze
+from models.Model_BinanceConfiguration import Model_BinanceConfiguration
 
-from BinanceSupervision.resources.Resource_main import Ui_MainWindow
-from BinanceSupervision.views.View_BinanceConfiguration import Dialog
+from resources.Resource_main import Ui_MainWindow
+from views.View_BinanceConfiguration import Dialog
 
 FORMAT = '%(asctime)s %(username)s:     %(message)s'
 logging.basicConfig(handlers=[logging.FileHandler(filename="system.log",

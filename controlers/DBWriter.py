@@ -1,4 +1,6 @@
-from BinanceSupervision.models.History import History
+import pandas
+
+from models.History import History
 import pymysql.cursors
 
 class DBWriter():

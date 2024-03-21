@@ -1,7 +1,7 @@
 import csv
 import pandas as pd
 
-from BinanceSupervision.models.History import *
+from models.History import *
 
 
 class HistoryParser():

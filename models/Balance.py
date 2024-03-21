@@ -1,4 +1,4 @@
-from BinanceSupervision.models.History import History
+from models.History import History
 
 class Balance():
     def __init__(self, token = "None", amount = float(0), transactionHistory : History = History()):

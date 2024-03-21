@@ -4,8 +4,8 @@ import time
 
 import pandas as pd
 
-from BinanceSupervision.models.Model_PureTransactionHistory import Model_PureTransactionHistory
-from BinanceSupervision.models.Model_PureTransaction import Model_PureTransaction
+from models.Model_PureTransactionHistory import Model_PureTransactionHistory
+from models.Model_PureTransaction import Model_PureTransaction
 
 class Ctrl_FileParser():
     def __init__(self):

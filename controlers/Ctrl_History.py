@@ -1,10 +1,10 @@
 import csv,re
 import pandas as pd
 
-from BinanceSupervision.models import Model_history
-from BinanceSupervision.models.Model_AssetBalance import Model_AssetBalance
-from BinanceSupervision.models.Model_BinanceReportAnalyze import Model_BinanceReportAnalyze
-from BinanceSupervision.models.Model_PureTransactionHistory import Model_PureTransactionHistory
+from models import Model_history
+from models.Model_AssetBalance import Model_AssetBalance
+from models.Model_BinanceReportAnalyze import Model_BinanceReportAnalyze
+from models.Model_PureTransactionHistory import Model_PureTransactionHistory
 
 class Ctrl_History():
     results= {}

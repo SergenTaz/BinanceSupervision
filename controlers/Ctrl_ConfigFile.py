@@ -30,3 +30,21 @@ class Ctrl_ConfigFile():
             pass
         return key,secret
 
+    def readDBConfiguration(self):
+        url=""
+        port=""
+        user=""
+        pwd=""
+        db=""
+        try:
+            config=configparser.ConfigParser()
+            config.read('conf.ini')
+            url=config['Database Configuration']['URL']
+            port=config['Database Configuration']['Port']
+            user=config['Database Configuration']['User']
+            pwd=config['Database Configuration']['Password']
+            db=config['Database Configuration']['Database']
+        except:
+            pass
+        return url, port, user, pwd, db
+

@@ -1,4 +1,4 @@
-from BinanceSupervision.models.Transaction import Transaction
+from models.Transaction import Transaction
 
 #This class modelize a transaction history, it stores all the transaction
 class History():

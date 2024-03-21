@@ -1,24 +1,32 @@
 import sys
 
-from BinanceSupervision.controlers.DBReader import DBReader
-from BinanceSupervision.controlers.HistoryAnalyzer import HistoryAnalyzer
-from BinanceSupervision.controlers.HistoryParser import *
-from BinanceSupervision.controlers.DBWriter import *
+from controlers.DBReader import DBReader
+from controlers.HistoryAnalyzer import HistoryAnalyzer
+from controlers.HistoryParser import *
+from controlers.DBWriter import *
+from controlers.Ctrl_ConfigFile import Ctrl_ConfigFile
 
 if __name__ == '__main__':
-    history=History()
-    historyParser=HistoryParser()
-    historyAnalyzer=HistoryAnalyzer()
-    dbWriter=DBWriter('192.168.1.100','root','mariadb','BinanceSupervision',3306)
-    dbReader=DBReader('192.168.1.100','root','mariadb','BinanceSupervision',3306)
+    configFile = Ctrl_ConfigFile()
+    url, port, user, pwd, db = configFile.readDBConfiguration()
 
-    file="E:\\Documents\\Thibaut Roudel\\Finances\\Crypto\\2022\\transaction-history-01-01-2022-to-31-12-2022.csv"
 
-    historyParser.parse(file,history)
-    print(history.__str__())
+    # history=History()
+    # historyParser=HistoryParser()
+    # historyAnalyzer=HistoryAnalyzer()
+    # dbWriter=DBWriter(url,user,pwd,db,port)
+    dbReader=DBReader(url,user,pwd,db,int(port))
 
-    dbWriter.writeHistory(history)
-    dbReader.getSumDeposits()
+    # file="E:\\Documents\\Thibaut Roudel\\Finances\\Crypto\\2022\\transaction-history-01-01-2022-to-31-12-2022.csv"
+
+    # historyParser.parse(file,history)
+    # print(history.__str__())
+
+    # dbWriter.writeHistory(history)
+    # print(dbReader.getSumDeposits())
+    for row in dbReader.getCoinHistory("EUR"):
+        print(row)
 
 
     sys.exit(0)
+

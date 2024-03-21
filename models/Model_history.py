@@ -1,4 +1,4 @@
-from BinanceSupervision.models.Model_transaction import Model_transaction
+from models.Model_transaction import Model_transaction
 
 class Model_History():
     def __init__(self):

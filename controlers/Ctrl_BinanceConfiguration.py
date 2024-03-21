@@ -1,4 +1,4 @@
-from BinanceSupervision.controlers.Ctrl_ConfigFile import Ctrl_ConfigFile
+from controlers.Ctrl_ConfigFile import Ctrl_ConfigFile
 
 class Ctrl_BinanceConfiguration():
 
